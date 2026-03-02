@@ -47,7 +47,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB1_APPEND_RESIZE							1
 #define LAB1_CLEAR									1
 #define LAB1_DESTRUCTOR								1
-#define LAB1_ASSIGNMENT_OPERATOR					0
+#define LAB1_ASSIGNMENT_OPERATOR					1
 #define LAB1_COPY_CONSTRUCTOR						0
 
 // Our implementation of a vector (simplified)
@@ -112,7 +112,17 @@ public:
 	// LAB1_ASSIGNMENT_OPERATOR
 	DynArray& operator=(const DynArray& _assign) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (&_assign == this)
+			return *this;
+		Clear();
+		mSize = _assign.Size();
+		mCapacity = _assign.Capacity();
+		mArray = new Type[mCapacity];
+		for (size_t i = 0; i < mSize; i++)
+		{
+			mArray[i] = *(_assign.mArray + i);//operator[](i);
+		}
+		return *this;
 	}
 
 	// LAB1_CLEAR
