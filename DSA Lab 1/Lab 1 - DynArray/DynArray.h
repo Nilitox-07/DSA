@@ -36,7 +36,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 // Individual unit test toggles
 #define LAB1_DEFAULT_CONSTRUCTOR_DEFAULTS			1
 #define LAB1_DEFAULT_CONSTRUCTOR_WITH_ARGS			1
-#define LAB1_BRACKET_OPERATOR						0
+#define LAB1_BRACKET_OPERATOR						1
 #define LAB1_SIZE_ACCESSOR							0
 #define LAB1_CAPACITY_ACCESSOR						0
 #define LAB1_RESERVE_EMPTY							0
@@ -124,7 +124,7 @@ public:
 	// LAB1_BRACKET_OPERATOR
 	Type& operator[](size_t _index) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return *(mArray + _index);
 	}
 
 	// LAB1_SIZE_ACCESSOR
