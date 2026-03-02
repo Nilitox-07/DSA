@@ -37,8 +37,8 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB1_DEFAULT_CONSTRUCTOR_DEFAULTS			1
 #define LAB1_DEFAULT_CONSTRUCTOR_WITH_ARGS			1
 #define LAB1_BRACKET_OPERATOR						1
-#define LAB1_SIZE_ACCESSOR							0
-#define LAB1_CAPACITY_ACCESSOR						0
+#define LAB1_SIZE_ACCESSOR							1
+#define LAB1_CAPACITY_ACCESSOR						1
 #define LAB1_RESERVE_EMPTY							0
 #define LAB1_RESERVE_DOUBLE_CAPACITY				0
 #define LAB1_RESERVE_LARGER_CAPACITY				0
@@ -130,13 +130,13 @@ public:
 	// LAB1_SIZE_ACCESSOR
 	size_t Size() const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return mSize;
 	}
 
 	// LAB1_CAPACITY_ACCESSOR
 	size_t Capacity() const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return mCapacity;
 	}
 
 	// LAB1_APPEND_NO_RESIZE
