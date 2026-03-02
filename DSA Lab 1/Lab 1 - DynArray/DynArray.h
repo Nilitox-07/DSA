@@ -35,7 +35,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 
 // Individual unit test toggles
 #define LAB1_DEFAULT_CONSTRUCTOR_DEFAULTS			1
-#define LAB1_DEFAULT_CONSTRUCTOR_WITH_ARGS			0
+#define LAB1_DEFAULT_CONSTRUCTOR_WITH_ARGS			1
 #define LAB1_BRACKET_OPERATOR						0
 #define LAB1_SIZE_ACCESSOR							0
 #define LAB1_CAPACITY_ACCESSOR						0
@@ -84,6 +84,12 @@ public:
 			mArray = nullptr;
 			mSize = 0;
 			mCapacity = 0;
+		}
+		else
+		{
+			mArray = new Type[_startingCap];
+			mSize = 0;
+			mCapacity = _startingCap;
 		}
 	};
 
