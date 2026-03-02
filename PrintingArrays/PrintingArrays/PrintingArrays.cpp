@@ -3,9 +3,14 @@
 
 #include <iostream>
 
+void Print(int _val)
+{
+    std::cout << _val << '\n';
+}
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
