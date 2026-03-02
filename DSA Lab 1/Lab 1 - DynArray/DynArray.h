@@ -48,7 +48,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB1_CLEAR									1
 #define LAB1_DESTRUCTOR								1
 #define LAB1_ASSIGNMENT_OPERATOR					1
-#define LAB1_COPY_CONSTRUCTOR						0
+#define LAB1_COPY_CONSTRUCTOR						1
 
 // Our implementation of a vector (simplified)
 template<typename Type>
@@ -106,7 +106,13 @@ public:
 	// LAB1_COPY_CONSTRUCTOR
 	DynArray(const DynArray& _copy) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		mSize = _copy.Size();
+		mCapacity = _copy.Capacity();
+		mArray = new Type[mCapacity];
+		for (size_t i = 0; i < mSize; i++)
+		{
+			mArray[i] = *(_copy.mArray + i);//operator[](i);
+		}
 	}
 
 	// LAB1_ASSIGNMENT_OPERATOR
@@ -120,7 +126,7 @@ public:
 		mArray = new Type[mCapacity];
 		for (size_t i = 0; i < mSize; i++)
 		{
-			mArray[i] = *(_assign.mArray + i);//operator[](i);
+			mArray[i] = _assign.mArray[i];//operator[](i);
 		}
 		return *this;
 	}
