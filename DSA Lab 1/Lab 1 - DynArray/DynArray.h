@@ -43,8 +43,8 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB1_RESERVE_DOUBLE_CAPACITY				1
 #define LAB1_RESERVE_LARGER_CAPACITY				1
 #define LAB1_RESERVE_SMALLER_CAPACITY				1
-#define LAB1_APPEND_NO_RESIZE						0
-#define LAB1_APPEND_RESIZE							0
+#define LAB1_APPEND_NO_RESIZE						1
+#define LAB1_APPEND_RESIZE							1
 #define LAB1_CLEAR									0
 #define LAB1_DESTRUCTOR								1
 #define LAB1_ASSIGNMENT_OPERATOR					0
@@ -143,7 +143,12 @@ public:
 	// LAB1_APPEND_RESIZE
 	void Append(const Type& _data) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (mSize == mCapacity)
+		{
+			Reserve();
+		}
+		mArray[mSize] = _data;
+		mSize++;
 	}
 
 	// LAB1_RESERVE_EMPTY
