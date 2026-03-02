@@ -152,6 +152,16 @@ public:
 	// LAB1_RESERVE_SMALLER_CAPACITY
 	void Reserve(size_t _newCapacity = 0) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (!_newCapacity)
+		{
+			if (!mCapacity)
+			{
+				mCapacity = 1;
+			}
+			else
+			{
+				mCapacity *= 2;
+			}
+		}
 	}
 };
