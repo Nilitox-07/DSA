@@ -45,7 +45,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB1_RESERVE_SMALLER_CAPACITY				1
 #define LAB1_APPEND_NO_RESIZE						1
 #define LAB1_APPEND_RESIZE							1
-#define LAB1_CLEAR									0
+#define LAB1_CLEAR									1
 #define LAB1_DESTRUCTOR								1
 #define LAB1_ASSIGNMENT_OPERATOR					0
 #define LAB1_COPY_CONSTRUCTOR						0
@@ -118,7 +118,11 @@ public:
 	// LAB1_CLEAR
 	void Clear() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (mArray)
+			delete[] mArray;
+		mArray = nullptr;
+		mSize = 0;
+		mCapacity = 0;
 	}
 
 	// LAB1_BRACKET_OPERATOR
