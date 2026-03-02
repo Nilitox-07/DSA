@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nilit\\FullSailAssignments\\DSA\\PrintingArrays\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EADBA34-F0F1-498A-8391-996B0472AD2D}|PrintingArrays\\PrintingArrays.vcxproj|C:\\Users\\nilit\\FullSailAssignments\\DSA\\PrintingArrays\\PrintingArrays\\PrintingArrays.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1EADBA34-F0F1-498A-8391-996B0472AD2D}|PrintingArrays\\PrintingArrays.vcxproj|solutionrelative:PrintingArrays\\PrintingArrays.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PrintingArrays.cpp",
+              "DocumentMoniker": "C:\\Users\\nilit\\FullSailAssignments\\DSA\\PrintingArrays\\PrintingArrays\\PrintingArrays.cpp",
+              "RelativeDocumentMoniker": "PrintingArrays\\PrintingArrays.cpp",
+              "ToolTip": "C:\\Users\\nilit\\FullSailAssignments\\DSA\\PrintingArrays\\PrintingArrays\\PrintingArrays.cpp",
+              "RelativeToolTip": "PrintingArrays\\PrintingArrays.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-02T14:30:16.83Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
