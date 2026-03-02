@@ -2,8 +2,8 @@
 //
 
 #include <iostream>
-
-void Print(int _val)
+template<typename Ty>
+void Print(Ty _val)
 {
     std::cout << _val << '\n';
 }
