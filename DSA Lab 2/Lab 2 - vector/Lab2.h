@@ -128,7 +128,8 @@ public:
 	// LAB2_FILL_ARRAY
 	void Fill(const int* _arr, size_t _size) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		for (int i = 0; i < _size; i++)
+			mValues.push_back(_arr[i]);
 	}
 
 	// LAB2_CLEAR
