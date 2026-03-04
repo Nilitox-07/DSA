@@ -39,7 +39,7 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB2_FILL_ARRAY				1
 #define LAB2_CLEAR					1
 #define LAB2_SORT_ASCENDING			1
-#define LAB2_SORT_DESCENDING		0
+#define LAB2_SORT_DESCENDING		1
 #define LAB2_BRACKETS				0
 #define LAB2_CONTAINS_TRUE			0
 #define LAB2_CONTAINS_FALSE			0
@@ -143,7 +143,12 @@ public:
 	// LAB2_SORT_DESCENDING
 	void Sort(bool _ascending) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (_ascending)
+		{
+			std::sort(mValues.begin(), mValues.end());
+			return;
+		}
+		std::sort(mValues.begin(), mValues.end(), std::greater());
 	}
 
 	// LAB2_BRACKETS
