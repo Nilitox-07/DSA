@@ -35,8 +35,8 @@ NOTE: If the unit test is not on, that code will not be compiled!
 
 // Individual unit test toggles
 #define LAB2_PALINDROME_NUMBER		1
-#define LAB2_FILL_FILE				0
-#define LAB2_FILL_ARRAY				0
+#define LAB2_FILL_FILE				1
+#define LAB2_FILL_ARRAY				1
 #define LAB2_CLEAR					0
 #define LAB2_SORT_ASCENDING			0
 #define LAB2_SORT_DESCENDING		0
@@ -60,7 +60,7 @@ inline int IsPalindromeNumber(unsigned int _num)
 {
 	// TODO: Implement this method according to directions in lab documentation
 	if (_num < 10) return true;
-	if (_num < 100) return (_num % 11 == 0);
+	if (_num <= 100) return (_num % 11 == 0);
 
 	int size = 3;
 	while (true)
@@ -73,12 +73,14 @@ inline int IsPalindromeNumber(unsigned int _num)
 
 	for (int i = 1; i <= halfSize; i++)
 	{
-		int leftSide = _num / (int)pow(10, size - i);
-		int rightSide = _num / (int)pow(10, i);
-		std::cout << 
+		int leftSide = _num / (int)pow(10, size - i) % 10;
+		int rightSide = (_num % (int)pow(10, i)) / (int)pow(10, i - 1);
+		if (leftSide == rightSide) continue;
+		return false;
 	}
+	return true; 
 
-	return false;
+	// I over complicated it by trying to not use string
 }
 
 class DSA_Lab2
@@ -106,7 +108,14 @@ public:
 	// LAB2_FILL_FILE
 	void Fill(const char* _inputFilename) {
 		// TODO: Implement this method according to directions in lab documentation
+		std::ifstream file(_inputFilename);
 
+		if (file.is_open())
+		{
+			int quantity = 0;
+			file.read((char*)&quantity, 4);
+
+		}
 	}
 
 	// LAB2_FILL_ARRAY
