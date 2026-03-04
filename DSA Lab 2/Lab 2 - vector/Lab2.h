@@ -40,10 +40,10 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB2_CLEAR					1
 #define LAB2_SORT_ASCENDING			1
 #define LAB2_SORT_DESCENDING		1
-#define LAB2_BRACKETS				0
-#define LAB2_CONTAINS_TRUE			0
-#define LAB2_CONTAINS_FALSE			0
-#define LAB2_MOVE_PALINDROMES		0
+#define LAB2_BRACKETS				1
+#define LAB2_CONTAINS_TRUE			1
+#define LAB2_CONTAINS_FALSE			1
+#define LAB2_MOVE_PALINDROMES		1
 
 /************/
 /* Includes */
@@ -154,14 +154,16 @@ public:
 	// LAB2_BRACKETS
 	int operator[](int _index) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return mValues[_index];
 	}
 
 	// LAB2_CONTAINS_TRUE
 	// LAB2_CONTAINS_FALSE
  	bool Contains(int _val) const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (std::find(mValues.begin(), mValues.end(), _val) == mValues.end())
+			return false;
+		return true;
 	}
 
 	// LAB2_MOVE_PALINDROMES
