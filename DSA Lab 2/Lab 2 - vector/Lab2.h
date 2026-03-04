@@ -108,13 +108,20 @@ public:
 	// LAB2_FILL_FILE
 	void Fill(const char* _inputFilename) {
 		// TODO: Implement this method according to directions in lab documentation
-		std::ifstream file(_inputFilename);
+		std::ifstream file(_inputFilename, std::ios::binary);
 
 		if (file.is_open())
 		{
 			int quantity = 0;
-			file.read((char*)&quantity, 4);
-
+			file.read((char*)&quantity, sizeof(quantity));
+			int num = 0;
+			for (;;)
+			{
+				file.read((char*)&num, sizeof(num));
+				if (file.eof()) break;
+				mValues.push_back(num);
+			}
+			file.close();
 		}
 	}
 
