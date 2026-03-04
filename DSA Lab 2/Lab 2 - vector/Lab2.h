@@ -169,7 +169,16 @@ public:
 	// LAB2_MOVE_PALINDROMES
 	void MovePalindromes() {	
 		// TODO: Implement this method according to directions in lab documentation
-
+		for (std::vector<int>::iterator it = mValues.begin(); it != mValues.end();)
+		{
+			if (IsPalindromeNumber(*it))
+			{
+				mPalindromes.push_back(*it);
+				it = mValues.erase(it);
+				continue;
+			}
+			it++;
+		}
 	}
 };
 
