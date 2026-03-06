@@ -34,13 +34,13 @@ NOTE: If the unit test is not on, that code will not be compiled!
 */
 
 // Individual unit test toggles			
-#define LAB3_CTOR						0
-#define LAB3_NODE_CTOR_DEFAULT			0
-#define LAB3_NODE_CTOR					0
-#define LAB3_ADDHEAD_EMPTY				0
-#define LAB3_ADDHEAD					0
-#define LAB3_ADDTAIL_EMPTY				0
-#define LAB3_ADDTAIL					0
+#define LAB3_CTOR						1
+#define LAB3_NODE_CTOR_DEFAULT			1
+#define LAB3_NODE_CTOR					1
+#define LAB3_ADDHEAD_EMPTY				1
+#define LAB3_ADDHEAD					1
+#define LAB3_ADDTAIL_EMPTY				1
+#define LAB3_ADDTAIL					1
 #define LAB3_CLEAR						0
 #define LAB3_DTOR						0
 #define LAB3_ITER_BEGIN					0
@@ -87,7 +87,9 @@ class DList {
 		// LAB3_NODE_CTOR
 		Node(const Type& _data, Node* _next = nullptr, Node* _prev = nullptr) {
 			// TODO: Implement this method according to directions in lab documentation
-
+			data = _data;
+			next = _next;
+			prev = _prev;
 		}
 	};
 
@@ -148,7 +150,9 @@ public:
 	// LAB3_CTOR
 	DList() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		mHead = nullptr;
+		mTail = nullptr;
+		mSize = 0;
 	}
 
 	// LAB3_DTOR
@@ -174,14 +178,36 @@ public:
 	// LAB3_ADDHEAD
 	void AddHead(const Type& _data) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		mSize++;
+		if (mHead == nullptr)
+		{
+			mHead = new Node(_data);
+			mTail = mHead;
+		}
+		else
+		{
+			Node* newHead = new Node(_data, mHead);
+			mHead->prev = newHead;
+			mHead = newHead;
+		}
 	}
 
 	// LAB3_ADDTAIL_EMPTY
 	// LAB3_ADDTAIL
 	void AddTail(const Type& _data) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		mSize++;
+		if (mHead == nullptr)
+		{
+			mHead = new Node(_data);
+			mTail = mHead;
+		}
+		else
+		{
+			Node* newTail = new Node(_data, nullptr, mTail);
+			mTail->next = newTail;
+			mTail = newTail;
+		}
 	}
 
 	// LAB3_CLEAR
