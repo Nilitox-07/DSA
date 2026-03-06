@@ -49,10 +49,10 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB3_ITER_INCREMENT_POST		1
 #define LAB3_ITER_DECREMENT_PRE			1
 #define LAB3_ITER_DECREMENT_POST		1
-#define LAB3_ITER_DEREFERENCE			0
-#define LAB3_INSERT_EMPTY				0
-#define LAB3_INSERT_HEAD				0
-#define LAB3_INSERT_MIDDLE				0
+#define LAB3_ITER_DEREFERENCE			1
+#define LAB3_INSERT_EMPTY				1
+#define LAB3_INSERT_HEAD				1
+#define LAB3_INSERT_MIDDLE				1
 #define LAB3_ERASE_EMPTY				0
 #define LAB3_ERASE_HEAD					0
 #define LAB3_ERASE_TAIL					0
@@ -143,7 +143,7 @@ public:
 		// LAB3_ITER_DEREFERENCE
 		Type& operator*() {
 			// TODO: Implement this method according to directions in lab documentation
-
+			return mCurr->data;
 		}
 
 		bool operator != (const Iterator& _iter) const {
@@ -239,8 +239,21 @@ public:
 	// LAB3_INSERT_EMPTY
 	// LAB3_INSERT_HEAD
 	// LAB3_INSERT_MIDDLE
-	Iterator Insert(Iterator& _iter, const Type& _data) {
+	Iterator Insert(Iterator& _iter, const Type& _data) 
+	{
 		// TODO: Implement this method according to directions in lab documentation
+		if (_iter.mCurr == nullptr || _iter.mCurr == mHead)
+		{
+			AddHead(_data);
+			_iter.mCurr = mHead;
+			//mSize = 1;
+		}
+		else
+		{
+
+		}
+		//Node* newNode = new Node(_data, (_iter--).mCurr, (_iter++).mCurr);
+		return _iter;
 
 	}
 
