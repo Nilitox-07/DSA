@@ -41,14 +41,14 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB3_ADDHEAD					1
 #define LAB3_ADDTAIL_EMPTY				1
 #define LAB3_ADDTAIL					1
-#define LAB3_CLEAR						0
-#define LAB3_DTOR						0
-#define LAB3_ITER_BEGIN					0
-#define LAB3_ITER_END					0
-#define LAB3_ITER_INCREMENT_PRE			0
-#define LAB3_ITER_INCREMENT_POST		0
-#define LAB3_ITER_DECREMENT_PRE			0
-#define LAB3_ITER_DECREMENT_POST		0
+#define LAB3_CLEAR						1
+#define LAB3_DTOR						1
+#define LAB3_ITER_BEGIN					1
+#define LAB3_ITER_END					1
+#define LAB3_ITER_INCREMENT_PRE			1
+#define LAB3_ITER_INCREMENT_POST		1
+#define LAB3_ITER_DECREMENT_PRE			1
+#define LAB3_ITER_DECREMENT_POST		1
 #define LAB3_ITER_DEREFERENCE			0
 #define LAB3_INSERT_EMPTY				0
 #define LAB3_INSERT_HEAD				0
@@ -107,25 +107,37 @@ public:
 		// LAB3_ITER_INCREMENT_PRE
 		Iterator& operator++() {
 			// TODO: Implement this method according to directions in lab documentation
-
+			Iterator next;
+			next.mCurr = mCurr->next;
+			mCurr = next.mCurr;
+			return *this;
 		}
 
 		// LAB3_ITER_INCREMENT_POST
 		Iterator operator++(int) {
 			// TODO: Implement this method according to directions in lab documentation
-
+			Iterator next;
+			next.mCurr = mCurr;
+			mCurr = mCurr->next;
+			return next;
 		}
 
 		// LAB3_ITER_DECREMENT_PRE
 		Iterator& operator--() {
 			// TODO: Implement this method according to directions in lab documentation
-
+			Iterator prev;
+			prev.mCurr = mCurr->prev;
+			mCurr = prev.mCurr;
+			return *this;
 		}
 
 		// LAB3_ITER_DECREMENT_POST
 		Iterator operator--(int) {
 			// TODO: Implement this method according to directions in lab documentation
-
+			Iterator prev;
+			prev.mCurr = mCurr;
+			mCurr = mCurr->prev;
+			return prev;
 		}
 
 		// LAB3_ITER_DEREFERENCE
@@ -136,6 +148,7 @@ public:
 
 		bool operator != (const Iterator& _iter) const {
 			return mCurr != _iter.mCurr;
+
 		}
 	};
 
@@ -158,8 +171,7 @@ public:
 	// LAB3_DTOR
 	~DList() {
 		// TODO: Implement this method according to directions in lab documentation
-
-
+		Clear();
 	}
 
 	// LAB3_COPY_CTOR
@@ -213,7 +225,15 @@ public:
 	// LAB3_CLEAR
 	void Clear() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		for (Node* node = mHead; node != nullptr;)
+		{
+			Node* oldNode = node;
+			node = node->next;
+			delete oldNode;
+		}
+		mHead = nullptr;
+		mTail = nullptr;
+		mSize = 0;
 	}
 
 	// LAB3_INSERT_EMPTY
@@ -236,12 +256,16 @@ public:
 	// LAB3_ITER_BEGIN
 	Iterator Begin() const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		Iterator mCurr;
+		mCurr.mCurr = mHead;
+		return mCurr;
 	}
 
 	// LAB3_ITER_END
 	Iterator End() const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		Iterator mCurr;
+		mCurr.mCurr = mTail->next;
+		return mCurr;
 	}
 };
