@@ -188,7 +188,8 @@ public:
 
 	// LAB3_ADDHEAD_EMPTY
 	// LAB3_ADDHEAD
-	void AddHead(const Type& _data) {
+	void AddHead(const Type& _data) 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 		mSize++;
 		if (mHead == nullptr)
@@ -206,7 +207,8 @@ public:
 
 	// LAB3_ADDTAIL_EMPTY
 	// LAB3_ADDTAIL
-	void AddTail(const Type& _data) {
+	void AddTail(const Type& _data) 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 		mSize++;
 		if (mHead == nullptr)
@@ -223,7 +225,8 @@ public:
 	}
 
 	// LAB3_CLEAR
-	void Clear() {
+	void Clear() 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 		for (Node* node = mHead; node != nullptr;)
 		{
@@ -250,9 +253,16 @@ public:
 		}
 		else
 		{
+			Node* newNode = new Node(_data, _iter.mCurr, _iter.mCurr->prev); // Starts a new Node that is pointing to Current and the next of Current
+			Node* mCurr = _iter.mCurr;
+			Node* prev = mCurr->prev;
 
+			mCurr->prev = newNode;
+			prev->next = newNode;
+
+			_iter.mCurr = newNode;
+			mSize++;
 		}
-		//Node* newNode = new Node(_data, (_iter--).mCurr, (_iter++).mCurr);
 		return _iter;
 
 	}
@@ -261,13 +271,15 @@ public:
 	// LAB3_ERASE_HEAD
 	// LAB3_ERASE_TAIL
 	// LAB3_ERASE_MIDDLE
-	Iterator Erase(Iterator& _iter) {
+	Iterator Erase(Iterator& _iter) 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 
 	}
 
 	// LAB3_ITER_BEGIN
-	Iterator Begin() const {
+	Iterator Begin() const 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 		Iterator mCurr;
 		mCurr.mCurr = mHead;
@@ -275,7 +287,8 @@ public:
 	}
 
 	// LAB3_ITER_END
-	Iterator End() const {
+	Iterator End() const 
+	{
 		// TODO: Implement this method according to directions in lab documentation
 		Iterator mCurr;
 		mCurr.mCurr = mTail->next;
