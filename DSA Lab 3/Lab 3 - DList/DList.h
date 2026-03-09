@@ -53,12 +53,12 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB3_INSERT_EMPTY				1
 #define LAB3_INSERT_HEAD				1
 #define LAB3_INSERT_MIDDLE				1
-#define LAB3_ERASE_EMPTY				0
-#define LAB3_ERASE_HEAD					0
-#define LAB3_ERASE_TAIL					0
-#define LAB3_ERASE_MIDDLE				0
-#define LAB3_ASSIGNMENT_OP				0
-#define LAB3_COPY_CTOR					0
+#define LAB3_ERASE_EMPTY				1
+#define LAB3_ERASE_HEAD					1
+#define LAB3_ERASE_TAIL					1
+#define LAB3_ERASE_MIDDLE				1
+#define LAB3_ASSIGNMENT_OP				1
+#define LAB3_COPY_CTOR					1
 
 template<typename Type>
 class DList {
@@ -177,13 +177,66 @@ public:
 	// LAB3_COPY_CTOR
 	DList(const DList& _copy) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		Iterator start;
+		start.mCurr = _copy.mHead;
+		Iterator curr;
+		for (Iterator mCurr = start; mCurr.mCurr != nullptr; mCurr++)
+		{
+			Node* node = mCurr.mCurr;
+			if (node->prev == nullptr)
+			{
+				mHead = new Node(node->data);
+				curr.mCurr = mHead;
+			}
+			else if (node->next == nullptr)
+			{
+				mTail = new Node(node->data);
+				curr.mCurr->next = mTail;
+				mTail->prev = curr.mCurr;
+			}
+			else
+			{
+				Node* prev = curr.mCurr;
+				curr.mCurr = new Node(node->data, nullptr, curr.mCurr);
+				prev->next = curr.mCurr;
+			}
+		}
+		mSize = _copy.mSize;
 	}
 
 	// LAB3_ASSIGNMENT_OP
-	DList& operator=(const DList& _assign) {
+	DList& operator=(const DList& _assign) 
+	{
 		// TODO: Implement this method according to directions in lab documentation
-
+		Clear();
+		if (this == &_assign)
+			return *this;
+		Iterator start;
+		start.mCurr = _assign.mHead;
+		Iterator curr;
+		for (Iterator mCurr = start; mCurr.mCurr != nullptr; mCurr++)
+		{
+			Node* node = mCurr.mCurr;
+			if (node->prev == nullptr)
+			{
+				mHead = new Node(node->data);
+				curr.mCurr = mHead;
+			}
+			else if (node->next == nullptr)
+			{
+				mTail = new Node(node->data);
+				curr.mCurr->next = mTail;
+				mTail->prev = curr.mCurr;
+			}
+			else
+			{
+				Node* prev = curr.mCurr;
+				curr.mCurr = new Node(node->data, nullptr, curr.mCurr);
+				prev->next = curr.mCurr;
+			}
+		}
+		mSize = _assign.mSize;
+		return *this;
 	}
 
 	// LAB3_ADDHEAD_EMPTY
@@ -274,7 +327,33 @@ public:
 	Iterator Erase(Iterator& _iter) 
 	{
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (_iter.mCurr == nullptr)
+			return _iter;
+		if(_iter.mCurr == mHead)
+		{
+			_iter.mCurr->next->prev = nullptr;
+			mHead = _iter.mCurr->next;
+			delete _iter.mCurr;
+			_iter.mCurr = mHead;
+		}
+		else if (_iter.mCurr == mTail)
+		{
+			_iter.mCurr->prev->next = nullptr;
+			mTail = _iter.mCurr->prev;
+			delete _iter.mCurr;
+			_iter.mCurr = nullptr;
+		}
+		else
+		{
+			Node* mCurr = _iter.mCurr;
+			Node* next = mCurr->next;
+			mCurr->prev->next = mCurr->next;
+			mCurr->next->prev = mCurr->prev;
+			delete _iter.mCurr;
+			_iter.mCurr = next;
+		}
+		mSize--;
+		return _iter;
 	}
 
 	// LAB3_ITER_BEGIN
