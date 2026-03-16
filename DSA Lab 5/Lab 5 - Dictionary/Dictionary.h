@@ -40,12 +40,12 @@ NOTE: If the unit test is not on, that code will not be compiled!
 #define LAB5_CLEAR					1
 #define LAB5_INSERT_NEW				1
 #define LAB5_INSERT_EXISTING		1
-#define LAB5_FIND					0
-#define LAB5_FIND_NOT_FOUND			0
-#define LAB5_REMOVE					0
-#define LAB5_REMOVE_NOT_FOUND		0
-#define LAB5_ASSIGNMENT_OP			0
-#define LAB5_COPY_CTOR				0
+#define LAB5_FIND					1
+#define LAB5_FIND_NOT_FOUND			1
+#define LAB5_REMOVE					1
+#define LAB5_REMOVE_NOT_FOUND		1
+#define LAB5_ASSIGNMENT_OP			1
+#define LAB5_COPY_CTOR				1
 
 /************/
 /* Includes */
@@ -115,13 +115,30 @@ public:
 	// LAB5_COPY_CTOR
 	Dictionary(const Dictionary& _copy) {
 		// TODO: Implement this method according to directions in lab documentation
-		
+		mNumBuckets = _copy.mNumBuckets;
+		mHashFunc = _copy.mHashFunc;
+		mTable = new std::list<Pair>[mNumBuckets];
+		for (int i = 0; i < _copy.mNumBuckets; i++)
+		{
+			mTable[i] = _copy.mTable[i];
+		}
 	}
 
 	// LAB5_ASSIGNMENT_OP
 	Dictionary& operator=(const Dictionary& _assign) {
 		// TODO: Implement this method according to directions in lab documentation
+		if (this == &_assign)
+			return *this;
 
+		delete[] mTable;
+		mNumBuckets = _assign.mNumBuckets;
+		mHashFunc = _assign.mHashFunc;
+		mTable = new std::list<Pair>[mNumBuckets];
+		for (int i = 0; i < _assign.mNumBuckets; i++)
+		{
+			mTable[i] = _assign.mTable[i];
+		}
+		return *this;
 	}
 
 	// LAB5_CLEAR
@@ -153,14 +170,35 @@ public:
 	// LAB5_FIND_NOT_FOUND
 	const Value* Find(const Key& _key) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		int index = mHashFunc(_key);
+		std::list<Dictionary<float, float>::Pair>& bucket = mTable[index];
+		for (iterator it = bucket.begin(); it != bucket.end();)
+		{
+			if (it->key == _key)
+			{
+				return &(it->value);
+			}
+			++it;
+		}
+		return nullptr;
 	}
 
 	// LAB5_REMOVE
 	// LAB5_REMOVE_NOT_FOUND
 	bool Remove(const Key& _key) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		int index = mHashFunc(_key);
+		std::list<Dictionary<float, float>::Pair>& bucket = mTable[index];
+		for (iterator it = bucket.begin(); it != bucket.end();)
+		{
+			if (it->key == _key)
+			{
+				bucket.erase(it);
+				return true;
+			}
+			++it;
+		}
+		return false;
 	}
 	
 };
