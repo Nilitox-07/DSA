@@ -35,11 +35,11 @@ NOTE: If the unit test is not on, that code will not be compiled!
 
 // Individual unit test toggles
 #define LAB6_POPULATE_LETTER_VALUES	1
-#define LAB6_GET_LETTER_VALUE		0
-#define LAB6_GET_WORD_VALUE			0
-#define LAB6_CREATE_PAIR			0
-#define LAB6_LOAD_FILE				0
-#define LAB6_FIND_WORD_SCORE		0
+#define LAB6_GET_LETTER_VALUE		1
+#define LAB6_GET_WORD_VALUE			1
+#define LAB6_CREATE_PAIR			1
+#define LAB6_LOAD_FILE				1
+#define LAB6_FIND_WORD_SCORE		1
 
 /************/
 /* Includes */
@@ -72,36 +72,63 @@ public:
 	// LAB6_POPULATE_LETTER_VALUES
 	void PopulateLetterValues(const int* _letterValues) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		for (int i = 0; i < 26; i++)
+		{
+			mLetterValues[i] = _letterValues[i];
+		}
 	}
 
 	// LAB6_GET_LETTER_VALUE
 	int GetLetterValue(char _letter) const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return mLetterValues[_letter - 'A'];
 	}
 
 	// LAB6_GET_WORD_VALUE
 	int GetWordValue(const std::string& _word) const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		int sum = 0;
+		for (int i = 0; i < _word.length(); i++)
+		{
+			sum += GetLetterValue(_word[i]);
+		}
+		return sum;
 	}
 
 	// LAB6_CREATE_PAIR
 	std::pair<std::string, int> CreatePair(const std::string& _word) const {
 		// TODO: Implement this method according to directions in lab documentation
-
+		return std::pair<std::string, int>(_word, GetWordValue(_word));
 	}
 
 	// LAB6_LOAD_FILE
 	void LoadWords(const char* _filename) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		std::ifstream file = std::ifstream(_filename);
+		if (file.is_open())
+		{
+			std::string word;
+			while (!file.eof())
+			{
+				std::getline(file, word, '\n');
+				mScrabbleMap.insert(CreatePair(word));
+			}
+			file.close();
+		}
 	}
 
 	// LAB6_FIND_WORD_SCORE
 	int FindValueInMap(const std::string& _word) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		/*if (std::find(mScrabbleMap.begin(), mScrabbleMap.end(), CreatePair(_word)) != mScrabbleMap.end())
+		{
+			return GetWordValue(_word);
+		}
+		return -1;*/
+		if (mScrabbleMap.find(_word) != mScrabbleMap.end())
+		{
+			return GetWordValue(_word);
+		}
+		return -1;
 	}
 };
