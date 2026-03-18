@@ -120,15 +120,6 @@ public:
 	// LAB6_FIND_WORD_SCORE
 	int FindValueInMap(const std::string& _word) {
 		// TODO: Implement this method according to directions in lab documentation
-		/*if (std::find(mScrabbleMap.begin(), mScrabbleMap.end(), CreatePair(_word)) != mScrabbleMap.end())
-		{
-			return GetWordValue(_word);
-		}
-		return -1;*/
-		if (mScrabbleMap.find(_word) != mScrabbleMap.end())
-		{
-			return GetWordValue(_word);
-		}
-		return -1;
+		return mScrabbleMap.find(_word) != mScrabbleMap.end() ? GetWordValue(_word) : -1;
 	}
 };
