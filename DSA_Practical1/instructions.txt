@@ -1,0 +1,24 @@
+All work should be done in Practical.cpp
+	No additional functions or classes are needed, unless you find them necessary.
+	This means all work can be done in main, outside of Step 1.
+
+1. Create a "Resolution" struct that has rows and columns members (as ints) in that order.
+
+2. Open one of the .art files in binary mode and read the header information, which contains the resolution of the image.
+
+3. Create a vector of char* to store the image data.
+
+4. Read each row of the image from the file into a dynamically allocated string (char*) and add it to the vector
+
+5. Display the image to the screen.
+
+6. Clean up all of your dynamically allocated memory.
+
+
+Additional features
+==============
+1. Try implementing it with a vector of std::strings instead.
+
+2. Create a menu to be able to read and display any of the files.
+
+3. Programmatically get the list of files rather than hard-coding them in.
