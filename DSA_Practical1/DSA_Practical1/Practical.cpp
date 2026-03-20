@@ -24,7 +24,8 @@ int main() {
 		std::string toPrint = "";
 		for (int i = 0; i < artFiles.size(); i++)
 		{
-			toPrint += std::format("[{}] Art {}\n", i + 1, i + 1);
+			int val = i + 1;
+			toPrint += std::format("[{}] Art {}\n", val, val);
 		}
 		std::cout << toPrint << "\n\n> ";
 		std::cin >> userInput;
