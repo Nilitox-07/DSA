@@ -16,9 +16,7 @@ struct Resolution
 	~Resolution()
 	{
 		for (char* row : image)
-		{
 			delete[] row;
-		}
 	}
 	void Display()
 	{
