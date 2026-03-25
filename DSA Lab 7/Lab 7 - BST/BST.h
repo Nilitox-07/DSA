@@ -129,6 +129,7 @@ public:
 	BST(const BST& _copy) 
 	{
 		// TODO: Implement this method according to directions in lab documentation
+#if 0 // Not Recursively
 		mRoot = nullptr;
 		Push(_copy.mRoot->data);
 		Node* tempHome = mRoot;
@@ -155,6 +156,12 @@ public:
 				tempAway = tempAway->parent;
 			}
 		}
+#endif
+#if 1 // Recursively
+		mRoot = nullptr;
+		Copy(_copy.mRoot);
+#endif 
+
 	}
 
 	// BST_ASSIGNMENT_OP
@@ -164,7 +171,9 @@ public:
 		if (this == &_assign)
 			return *this;
 		Clear();
-		Push(_assign.mRoot->data);
+#if 0 // Not Recursively
+		
+		Push(_assign.mRoot->data); // Asigning mRoot
 		Node* tempHome = mRoot;
 		Node* tempAway = _assign.mRoot; 
 		while (true)
@@ -189,6 +198,10 @@ public:
 				tempAway = tempAway->parent;
 			}
 		}
+#endif
+#if 1 // Recursively
+		Copy(_assign.mRoot);
+#endif
 		return *this;
 	}
 
@@ -198,6 +211,12 @@ private:
 	void Copy(const Node* _curr) 
 	{
 		// TODO: Implement this method according to directions in lab documentation
+		Push(_curr->data);
+		if (_curr->left != nullptr)
+			Copy(_curr->left);
+		if (_curr->right != nullptr)
+			Copy(_curr->right);
+			
 
 	}
 
@@ -207,7 +226,7 @@ public:
 	void Clear() 
 	{
 		// TODO: Implement this method according to directions in lab documentation
-
+#if 0 // Not Recursively
 		Node* track = mRoot;
 		Node* tempNode;
 		while (mRoot != nullptr)
@@ -231,6 +250,12 @@ public:
 				track = tempNode;
 			}
 		}
+#endif
+#if 1 // Recursively
+		if (mRoot != nullptr)
+			Clear(mRoot);
+		mRoot = nullptr;
+#endif
 	}
 
 private:
@@ -239,6 +264,11 @@ private:
 	void Clear(Node* _curr) 
 	{
 		// TODO: Implement this method according to directions in lab documentation
+		if (_curr->left != nullptr)
+			Clear(_curr->left);
+		if (_curr->right != nullptr)
+			Clear(_curr->right);
+		delete _curr;
 	}
 
 public:
