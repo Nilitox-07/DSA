@@ -41,14 +41,14 @@ NOTE: If the unit test is not on, that code will not be compiled!
 
 // Individual unit test toggles
 #define HUFFMAN_CTOR					1
-#define HUFFMAN_GENERATE_FREQUENCY		0
-#define HUFFMAN_GENERATE_LEAFLIST		0
-#define HUFFMAN_GENERATE_TREE			0
-#define HUFFMAN_CLEAR_TREE				0
-#define HUFFMAN_DTOR					0
-#define HUFFMAN_GENERATE_ENCODING		0
-#define HUFFMAN_COMPRESS				0
-#define HUFFMAN_DECOMPRESS				0
+#define HUFFMAN_GENERATE_FREQUENCY		1
+#define HUFFMAN_GENERATE_LEAFLIST		1
+#define HUFFMAN_GENERATE_TREE			1
+#define HUFFMAN_CLEAR_TREE				1
+#define HUFFMAN_DTOR					1
+#define HUFFMAN_GENERATE_ENCODING		1
+#define HUFFMAN_COMPRESS				1
+#define HUFFMAN_DECOMPRESS				1
 
 // Optional unit tests for debugging with small file containing "HELLO WORLD"
 #define HUFFMAN_DEBUG_COMPRESS			0
@@ -105,13 +105,16 @@ class Huffman {
 	// HUFFMAN_CTOR
 	Huffman(const std::string& _fileName) {
 		// TODO: Implement this method according to directions in lab documentation
-		
+		mFileName = _fileName;
+		for (int i = 0; i < 256; ++i)
+			mFrequencyTable[i] = 0;
+		mRoot = nullptr;
 	}
 
 	// HUFFMAN_DTOR
 	~Huffman() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		ClearTree();
 	}
 
 private:
@@ -119,37 +122,91 @@ private:
 	// HUFFMAN_GENERATE_FREQUENCY
 	void GenerateFrequencyTable() {
 		// TODO: Implement this method according to directions in lab documentation
+		std::ifstream binFile(mFileName, std::ios_base::binary);
 
+		if (binFile.is_open())
+		{
+			while(!binFile.eof())
+			{
+				unsigned int val = 0;
+				binFile.read((char*)&val, 1);
+				if (binFile.eof())
+					break;
+				mFrequencyTable[val]++;
+			}
+			binFile.close();
+		}
 	}
 
 	// HUFFMAN_GENERATE_LEAFLIST
 	void GenerateLeafList() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		for (int i = 0; i < 256; i++)
+		{
+			if (mFrequencyTable[i] != 0)
+			{
+				mLeafList.push_back(new HuffNode(i, mFrequencyTable[i]));
+			}
+		}
 	}
 
 	// HUFFMAN_GENERATE_TREE
 	void GenerateTree() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		std::priority_queue<HuffNode*, std::vector<HuffNode*>, HuffCompare> queue;
+		for (HuffNode* node : mLeafList)
+		{
+			queue.push(node);
+		}
+		while (queue.size() > 1)
+		{
+			HuffNode* top1 = queue.top();
+			queue.pop();
+			HuffNode* top2 = queue.top();
+			queue.pop();
+			HuffNode* parent = new HuffNode(-1, top1->freq + top2->freq, top1, top2);
+			top1->parent = parent;
+			top2->parent = parent;
+			queue.push(parent);
+		}
+		mRoot = queue.top();
 	}
 
 	// HUFFMAN_GENERATE_ENCODING
 	void GenerateEncodingTable() {
 		// TODO: Implement this method according to directions in lab documentation
-	
+		for (HuffNode* node : mLeafList)
+		{
+			HuffNode* temp = node;
+			while (temp != mRoot)
+			{
+				HuffNode* tempParent = temp->parent;
+				if (tempParent->left == temp)
+					mEncodingTable[node->value].push_back(0);
+				else if (tempParent->right == temp)
+					mEncodingTable[node->value].push_back(1);
+				temp = tempParent;
+			}
+			std::reverse(mEncodingTable[node->value].begin(), mEncodingTable[node->value].end());
+		}
 	}
 
 	// HUFFMAN_CLEAR_TREE
 	void ClearTree() {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if(mRoot != nullptr)
+			ClearTree(mRoot);
+		mRoot = nullptr;
 	}
 
 	// Recursive helper function (not directly unit-tested)
 	void ClearTree(HuffNode* _curr) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		if (_curr->left != nullptr)
+			ClearTree(_curr->left);
+		if (_curr->right != nullptr)
+			ClearTree(_curr->right);
+		delete _curr;
 	}
 
 public:
@@ -158,14 +215,57 @@ public:
 	// HUFFMAN_DEBUG_COMPRESS
 	void Compress(const char* _outputFile) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		GenerateFrequencyTable();
+		GenerateLeafList();
+		GenerateTree();
+		GenerateEncodingTable();
+		BitOfstream output(_outputFile, (char*)mFrequencyTable, 1024);
+		std::ifstream binFile(mFileName, std::ios_base::binary);
+		if (binFile.is_open())
+		{
+			while (!binFile.eof())
+			{
+				unsigned int val = 0;
+				binFile.read((char*)&val, 1);
+				if (binFile.eof())
+					break;
+				output << mEncodingTable[val];
+			}
+			binFile.close();
+			output.Close();
+		}
 	}
 
 	// HUFFMAN_DECOMPRESS
 	// HUFFMAN_DEBUG_DECOMPRESS
 	void Decompress(const char* _outputFile) {
 		// TODO: Implement this method according to directions in lab documentation
-
+		BitIfstream input(mFileName.c_str(), (char*)mFrequencyTable, 1024);
+		GenerateLeafList();
+		GenerateTree();
+		std::ofstream output(_outputFile, std::ios_base::binary);
+		bool track;
+		unsigned char write;
+		HuffNode* traverse = mRoot;
+		if(output.is_open())
+		{
+			for(int i = 0; i < mRoot->freq; ++i)
+			{
+				traverse = mRoot;
+				while(traverse->right != nullptr || traverse->left != nullptr)
+				{
+					input >> track;
+					if (!track)
+						traverse = traverse->left;
+					else
+						traverse = traverse->right;
+				}
+				write = traverse->value;
+				output.write((char*)&write, sizeof(write));
+			}
+			output.close();
+		}
+		input.Close();
 	}
 };
 
