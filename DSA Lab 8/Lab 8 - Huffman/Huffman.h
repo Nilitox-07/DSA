@@ -233,6 +233,7 @@ public:
 			}
 			binFile.close();
 			output.Close();
+
 		}
 	}
 
@@ -245,11 +246,11 @@ public:
 		GenerateTree();
 		std::ofstream output(_outputFile, std::ios_base::binary);
 		bool track;
-		unsigned char write;
+		short write;
 		HuffNode* traverse = mRoot;
 		if(output.is_open())
 		{
-			for(int i = 0; i < mRoot->freq; ++i)
+			for(unsigned int i = 0; i < mRoot->freq; ++i)
 			{
 				traverse = mRoot;
 				while(traverse->right != nullptr || traverse->left != nullptr)
