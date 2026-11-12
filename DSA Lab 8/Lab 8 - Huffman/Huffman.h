@@ -262,7 +262,7 @@ public:
 						traverse = traverse->right;
 				}
 				write = traverse->value;
-				output.write((char*)&write, sizeof(write));
+				output.write((char*)&write, 1);
 			}
 			output.close();
 		}
